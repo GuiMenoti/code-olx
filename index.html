@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada - Cibersegurança e Proteção de Dados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 10px;
+            position: relative;
+        }
+
+        .container {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .book {
+            width: 90vw;
+            max-width: 300px;
+            height: calc(90vw * 1.4);
+            max-height: 420px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateBook 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .book:hover {
+            animation-play-state: paused;
+            transform: rotateY(0deg) scale(1.05);
+        }
+
+        .book-cover,
+        .book-back,
+        .book-spine {
+            position: absolute;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 100%;
+            transform: translateZ(15px);
+            background: url('./livro.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 8px;
+            /* Fallback caso a imagem não carregue */
+            background-color: #1a1a2e;
+        }
+
+        .book-back {
+            width: 100%;
+            height: 100%;
+            background: url('./Screenshot_6.png') no-repeat center center;
+            background-size: cover;
+            transform: rotateY(180deg) translateZ(15px);
+            border-radius: 8px;
+            /* Fallback caso a imagem não carregue */
+            background-color: #1a1a2e;
+        }.book-side {
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  background: #eaeaea;
+  transform: rotateY(90deg) translateZ(calc(50% - 15px));
+}
+
+        .book-spine {
+            width: 30px;
+            height: 100%;
+            background: url('./Screenshot_7.png') no-repeat center center;
+            background-size: cover;
+            transform: rotateY(-90deg) translateZ(calc(50% - 15px));
+            border-radius: 0 8px 8px 0;
+            /* Fallback caso a imagem não carregue */
+            background: linear-gradient(to bottom, #16213e 0%, #1a1a2e 100%);
+        }
+
+        @keyframes rotateBook {
+            0% { 
+                transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+            }
+            25% { 
+                transform: rotateY(90deg) rotateX(5deg) rotateZ(2deg);
+            }
+            50% { 
+                transform: rotateY(180deg) rotateX(0deg) rotateZ(0deg);
+            }
+            75% { 
+                transform: rotateY(270deg) rotateX(-5deg) rotateZ(-2deg);
+            }
+            100% { 
+                transform: rotateY(360deg) rotateX(0deg) rotateZ(0deg);
+            }
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #333;
+            font-size: 4vw;
+            max-font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out;
+            white-space: nowrap;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            30% { opacity: 1; transform: translateX(-50%) translateY(0px); }
+            70% { opacity: 1; transform: translateX(-50%) translateY(0px); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60vw;
+            max-width: 250px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #9b59b6, #3498db, #2ecc71);
+            border-radius: 2px;
+            animation: fillProgress 3s ease-out;
+        }
+
+        @keyframes fillProgress {
+            0% { 
+                width: 0%; 
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% { 
+                width: 100%; 
+                opacity: 1;
+            }
+        }
+
+        /* Partículas flutuantes */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(155, 89, 182, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .particle:nth-child(2n) {
+            background: rgba(52, 152, 219, 0.7);
+            animation-delay: -2.5s;
+        }
+
+        .particle:nth-child(3n) {
+            background: rgba(46, 204, 113, 0.7);
+            animation-delay: -1.2s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-15vh) translateX(5vw) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsividade para telas muito pequenas */
+        @media (max-width: 480px) {
+            .book {
+                width: 85vw;
+                height: calc(85vw * 1.4);
+            }
+            
+            .loading-text {
+                font-size: 5vw;
+                bottom: 20%;
+            }
+            
+            .progress-bar {
+                width: 70vw;
+                bottom: 15%;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .book {
+                width: 80vw;
+                height: calc(80vw * 1.4);
+            }
+            
+            .book-spine {
+                width: 25px;
+            }
+        }
+
+        /* Orientação landscape em mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .book {
+                width: 40vh;
+                height: calc(40vh * 1.4);
+                max-height: none;
+            }
+            
+            .loading-text {
+                bottom: 10%;
+                font-size: 3vh;
+            }
+            
+            .progress-bar {
+                bottom: 5%;
+                width: 50vh;
+            }
+        }
+
+        /* Efeito de brilho sutil */
+        .book::before {
+            content: '';
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            right: -5%;
+            bottom: -5%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            border-radius: 12px;
+            opacity: 0;
+            animation: shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Sombra dinâmica */
+        .book-shadow {
+            position: absolute;
+            width: 120%;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%);
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: shadowMove 4s ease-in-out infinite;
+        }
+
+        @keyframes shadowMove {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateX(-45%) scale(0.8);
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="book" onclick="redirectToLink()">
+            <div class="book-cover"></div>
+            <div class="book-back"></div>
+            <div class="book-spine"></div>
+              <div class="book-side"></div>
+            <div class="book-shadow"></div>
+        </div>
+
+        <!-- Partículas decorativas -->
+        <div class="particle" style="top: 10%; left: 20%;"></div>
+        <div class="particle" style="top: 70%; left: 80%;"></div>
+        <div class="particle" style="top: 30%; left: 10%;"></div>
+        <div class="particle" style="top: 60%; left: 90%;"></div>
+        <div class="particle" style="top: 20%; left: 70%;"></div>
+        <div class="particle" style="top: 80%; left: 30%;"></div>
+        <div class="particle" style="top: 45%; left: 5%;"></div>
+        <div class="particle" style="top: 25%; left: 95%;"></div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+   
+</body>
+</html>
