@@ -234,29 +234,32 @@
         }
 
         // Sistema de carregamento
-        let progress = 0;
+     const LOADING_DURATION = 5000; // 5 segundos em milissegundos
+        const startTime = Date.now();
         const loadingBar = document.getElementById('loadingBar');
         const redirectMessage = document.getElementById('redirectMessage');
+        let redirectExecuted = false;
 
-    
-let startTime = Date.now();
-const totalTime = 5000; // 5 segundos
+        function updateProgress() {
+            if (redirectExecuted) return;
+            
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / LOADING_DURATION) * 100, 100);
+            
+            loadingBar.style.width = progress + '%';
+            
+            if (progress >= 100 && !redirectExecuted) {
+                redirectExecuted = true;
+                setTimeout(() => {
+                    redirectMessage.classList.add('show');
+                    setTimeout(() => {
+                        // Substitua pela URL de destino
+                        window.location.href = 'https://redelideres.notion.site/25018ac9dd4980a4b1cfd8dee2917ce7';
+                    }, 100);
+                }, 200);
+            }
+        }
 
-function updateProgress() {
-    const elapsed = Date.now() - startTime;
-    const progress = Math.min((elapsed / totalTime) * 100, 100);
-    loadingBar.style.width = progress + '%';
-
-    if (progress >= 100) {
-        redirectMessage.classList.add('show');
-        setTimeout(() => {
-            window.location.href = 'https://redelideres.notion.site/25018ac9dd4980a4b1cfd8dee2917ce7';
-        }, 200);
-        clearInterval(interval); // para o loop
-    }
-}
-
-const interval = setInterval(updateProgress, 50); // atualiza a cada 50ms
         // Redimensionamento da janela
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -269,12 +272,8 @@ const interval = setInterval(updateProgress, 50); // atualiza a cada 50ms
         // Inicializar
         init();
 
-        // Atualizar progresso a cada frame
-        function gameLoop() {
-            updateProgress();
-            requestAnimationFrame(gameLoop);
-        }
-        gameLoop();
+        // Atualizar progresso a cada 50ms (independente do framerate)
+        setInterval(updateProgress, 50);
     </script>
 </body>
 </html>
