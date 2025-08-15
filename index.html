@@ -238,23 +238,25 @@
         const loadingBar = document.getElementById('loadingBar');
         const redirectMessage = document.getElementById('redirectMessage');
 
-        function updateProgress() {
-            progress += (100 / (5 * 40)); // 5 segundos * 60fps
-            
-            if (progress >= 100) {
-                progress = 100;
-                setTimeout(() => {
-                    redirectMessage.classList.add('show');
-                    setTimeout(() => {
-                        // Substitua pela URL de destino
-                        window.location.href = 'https://redelideres.notion.site/25018ac9dd4980a4b1cfd8dee2917ce7';
-                    }, 100);
-                }, 200);
-            }
-            
-            loadingBar.style.width = progress + '%';
-        }
+    
+let startTime = Date.now();
+const totalTime = 5000; // 5 segundos
 
+function updateProgress() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min((elapsed / totalTime) * 100, 100);
+    loadingBar.style.width = progress + '%';
+
+    if (progress >= 100) {
+        redirectMessage.classList.add('show');
+        setTimeout(() => {
+            window.location.href = 'https://redelideres.notion.site/25018ac9dd4980a4b1cfd8dee2917ce7';
+        }, 200);
+        clearInterval(interval); // para o loop
+    }
+}
+
+const interval = setInterval(updateProgress, 50); // atualiza a cada 50ms
         // Redimensionamento da janela
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
