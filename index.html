@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carregando...</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      <meta property="og:title" content="Quais suas maiores dificuldades relacionadas a cibersegurança?" />
+  <meta property="og:description" content="Deixe a sua opinião" />
+  <meta property="og:image" content="https://i.ibb.co/YF1Pfsgd/Design-sem-nome-1.png" />
     <style>
         * {
             margin: 0;
@@ -97,10 +100,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
             padding: 20px 30px;
-            border-radius: 10px;
             font-size: 18px;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -126,7 +126,9 @@
             <div class="loading-bar" id="loadingBar"></div>
         </div>
     </div>
+<div id="redirectMessage" class="redirect-message">
 
+</div>
 
 
     <script>
@@ -237,7 +239,7 @@
         const redirectMessage = document.getElementById('redirectMessage');
 
         function updateProgress() {
-            progress += (100 / (5 * 60)); // 5 segundos * 60fps
+            progress += (100 / (5 * 40)); // 5 segundos * 60fps
             
             if (progress >= 100) {
                 progress = 100;
@@ -245,8 +247,8 @@
                     redirectMessage.classList.add('show');
                     setTimeout(() => {
                         // Substitua pela URL de destino
-                        window.location.href = 'https://exemplo.com';
-                    }, 1000);
+                        window.location.href = 'https://redelideres.notion.site/25018ac9dd4980a4b1cfd8dee2917ce7';
+                    }, 100);
                 }, 200);
             }
             
